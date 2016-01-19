@@ -1,6 +1,4 @@
 import java.math.*;
-//import java.lang.Object;
-//import java.lang.Number;
 
 public class Enc_decr {
 
@@ -8,31 +6,20 @@ public class Enc_decr {
 	private static int secondKey = 19;
 	private static int module = 26;
 
-	// public static void main(String[] args) {
-	// String input = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	// String cipher = encrypt(input);
-	// String deciphered = decrypt(cipher);
-	// System.out.println("Source:    " + input);
-	// System.out.println("Encrypted: " + cipher);
-	// System.out.println("Decrypted: " + deciphered);
-	// }
+	// ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 
 	static String encrypt(String input) {
 		StringBuilder builder = new StringBuilder();
 		for (int in = 0; in < input.length(); in++) {
 			char character = input.charAt(in);
-			// if (Character.isLetter(character)) {
-			// character = (char) ((firstKey * (character - 'a') + secondKey) %
-			// module + 'a');
-			// }
-			if (Character.isLowerCase(character)) {
-				character = (char) ((((firstKey * character) + secondKey) % module) + 'a');
-			} else {
-				character = (char) ((((firstKey * character) + secondKey) % module) + 'A');
-			}
-			// character = (char) ((((firstKey * character) + secondKey) %
-			// module) + 'a');
 
+			if (character != ' ') {
+				if (Character.isLowerCase(character)) {
+					character = (char) ((((firstKey * (character - 'a') + secondKey) % module) + 'a'));
+				} else {
+					character = (char) ((((firstKey * (character - 'A') + secondKey) % module) + 'A'));
+				}
+			}
 			builder.append(character);
 		}
 		return builder.toString();
@@ -40,25 +27,20 @@ public class Enc_decr {
 
 	static String decrypt(String input) {
 		StringBuilder builder = new StringBuilder();
-		// compute firstKey^-1 aka "modular inverse"
+
 		BigInteger inverse = BigInteger.valueOf(firstKey).modInverse(
 				BigInteger.valueOf(module));
-		System.out.println(inverse.intValue());
-	
-		// perform actual decryption
+
 		for (int in = 0; in < input.length(); in++) {
 			char character = input.charAt(in);
 			if (Character.isLetter(character)) {
-//				 int decoded = inverse.intValue() * (character - 'a' -
-//				 secondKey + module);
-//				 character = (char) (decoded % module + 'a');
-				
+
 				if (Character.isLowerCase(character)) {
-					character = (char) (((inverse.intValue()
-							* ((character - secondKey)) % module)) + 'a');
+					character = (char) (inverse.intValue()
+							* (character - 'a' - secondKey + module) % module + 'a');
 				} else {
-					character = (char) (((inverse.intValue()
-							* ((character - secondKey)) % module)) + 'A');
+					character = (char) (inverse.intValue()
+							* (character - 'A' - secondKey + module) % module + 'A');
 				}
 
 			}

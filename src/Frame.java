@@ -46,7 +46,7 @@ public class Frame extends JFrame implements ActionListener {
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
 		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		// buttonPanel.add(Box.createHorizontalGlue());
+		//buttonPanel.add(Box.createHorizontalGlue());
 		buttonPanel.add(btnClear);
 		buttonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
 		buttonPanel.add(btnEncrypt);
@@ -84,12 +84,10 @@ public class Frame extends JFrame implements ActionListener {
 
 		outputPanel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-		//JTextArea txtrOutput = new JTextArea();
 		txtrOutput.setWrapStyleWord(true);
 		txtrOutput.setLineWrap(true);
 		txtrOutput.setFont(new Font("Monospaced", Font.PLAIN, 14));
-		// txtrOutput.setText();
-
+		
 		JScrollPane scrollPanelOutput = new JScrollPane(txtrOutput);
 		outputPanel.add(scrollPanelOutput);
 
