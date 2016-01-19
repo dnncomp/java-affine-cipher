@@ -1,91 +1,128 @@
-import java.lang.reflect.Constructor;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.JTextArea;
-import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
 import javax.swing.SwingConstants;
-import java.awt.Component;
+
 import java.awt.Font;
-import javax.swing.JSeparator;
-import java.awt.FlowLayout;
-import javax.swing.JScrollBar;
+
 import javax.swing.JScrollPane;
+import java.awt.Component;
 
-
-public class Frame extends JFrame {
+public class Frame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	JTextArea txtrOutput = new JTextArea();
+	JTextArea txtrInput = new JTextArea();
+
 	public Frame() {
-		
-		JPanel panel = new JPanel();
-		getContentPane().add(panel, BorderLayout.NORTH);
-		
+
+		// создали кнопки
 		JButton btnClear = new JButton("Clear");
-		panel.add(btnClear);
-		
+		btnClear.setActionCommand("Clear");
+		btnClear.addActionListener(this);
+
 		JButton btnEncrypt = new JButton("Encrypt");
-		btnEncrypt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		panel.add(btnEncrypt);
-		
+		btnEncrypt.setActionCommand("Encrypt");
+		btnEncrypt.addActionListener(this);
+
 		JButton btnDecrypt = new JButton("Decrypt");
-		panel.add(btnDecrypt);
-		
-		JPanel panel_1 = new JPanel();
-		getContentPane().add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.PAGE_AXIS));
-		
-		JLabel lblInput = new JLabel("Input text:");
-		lblInput.setVerticalAlignment(SwingConstants.TOP);
-		panel_1.add(lblInput);
-		
-		//panel_1.add(txtrInput);
-		
-		
-		
-		
-		JTextArea txtrInput = new JTextArea();
+		btnDecrypt.setActionCommand("Decrypt");
+		btnDecrypt.addActionListener(this);
+
+		// панель для кнопок
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		// buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(btnClear);
+		buttonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+		buttonPanel.add(btnEncrypt);
+		buttonPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+		buttonPanel.add(btnDecrypt);
+
+		getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
+
+		// *********** Input Panel ************
+		JPanel inputPanel = new JPanel();
+		inputPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.PAGE_AXIS));
+		JLabel labelInput = new JLabel("Input:");
+		inputPanel.add(labelInput);
+		labelInput.setFont(new Font("Tahoma", Font.BOLD, 15));
+		labelInput.setHorizontalAlignment(SwingConstants.LEFT);
+
+		inputPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
 		txtrInput.setWrapStyleWord(true);
 		txtrInput.setLineWrap(true);
-		panel_1.add(txtrInput);
 		txtrInput.setFont(new Font("Monospaced", Font.PLAIN, 14));
-		txtrInput.setText("Microsoft Edge \u0434\u0435\u043B\u0430\u0435\u0442 \u0440\u0430\u0431\u043E\u0442\u0443 \u0432 \u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0435 \u0443\u0434\u043E\u0431\u043D\u0435\u0439.");
 		
-		JScrollPane scrollPane = new JScrollPane(txtrInput);
-		panel_1.add(scrollPane);
-		
-		JSeparator separator = new JSeparator();
-		panel_1.add(separator);
-		
-		JLabel lblNewLabel = new JLabel("Result:");
-		panel_1.add(lblNewLabel);
-		
-		
-		
-		JTextArea txtrResult = new JTextArea(4,20);
-		txtrResult.setFont(new Font("Monospaced", Font.PLAIN, 14));
-		txtrResult.setEditable(false);
-		txtrResult.setWrapStyleWord(true);
-		txtrResult.setLineWrap(true);
-		txtrResult.setText("Microsoft Edge \u0434\u0435\u043B\u0430\u0435\u0442 \u0440\u0430\u0431\u043E\u0442\u0443 \u0432 \u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0435 \u0443\u0434\u043E\u0431\u043D\u0435\u0439.\r\n\r\n\u042D\u0442\u043E\u0442 \u043D\u043E\u0432\u044B\u0439 \u0431\u0440\u0430\u0443\u0437\u0435\u0440 \u0441\u043E\u0437\u0434\u0430\u043D \u0434\u043B\u044F \u0443\u0434\u043E\u0431\u043D\u043E\u0433\u043E \u043E\u0431\u043C\u0435\u043D\u0430 \u0434\u0430\u043D\u043D\u044B\u043C\u0438, \u0447\u0442\u0435\u043D\u0438\u044F, \u043F\u043E\u0438\u0441\u043A\u0430 \u0438 \u0440\u0430\u0431\u043E\u0442\u044B \u0432 \u0418\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0435.\r\n\r\n\u0423\u0437\u043D\u0430\u0442\u044C \u0431\u043E\u043B\u044C\u0448\u0435");
-		panel_1.add(txtrResult);
-		
-		JScrollPane scrollPane_1 = new JScrollPane(txtrResult);
-		panel_1.add(scrollPane_1);
-		
-		
-		setSize(400, 300);		
-		//pack();
+		JScrollPane scrollPanelInput = new JScrollPane(txtrInput);
+		inputPanel.add(scrollPanelInput);
+
+		// *********** Output Panel ************
+		JPanel outputPanel = new JPanel();
+		outputPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		outputPanel.setLayout(new BoxLayout(outputPanel, BoxLayout.PAGE_AXIS));
+		JLabel labelOutput = new JLabel("Output:");
+		labelOutput.setFont(new Font("Tahoma", Font.BOLD, 15));
+		labelOutput.setHorizontalAlignment(SwingConstants.LEFT);
+		outputPanel.add(labelOutput);
+
+		outputPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		//JTextArea txtrOutput = new JTextArea();
+		txtrOutput.setWrapStyleWord(true);
+		txtrOutput.setLineWrap(true);
+		txtrOutput.setFont(new Font("Monospaced", Font.PLAIN, 14));
+		// txtrOutput.setText();
+
+		JScrollPane scrollPanelOutput = new JScrollPane(txtrOutput);
+		outputPanel.add(scrollPanelOutput);
+
+		JPanel centralPanel = new JPanel();
+		centralPanel
+				.setLayout(new BoxLayout(centralPanel, BoxLayout.PAGE_AXIS));
+		centralPanel.add(inputPanel);
+
+		Component verticalStrut = Box.createVerticalStrut(20);
+		centralPanel.add(verticalStrut);
+		centralPanel.add(outputPanel);
+		getContentPane().add(centralPanel, BorderLayout.CENTER);
+
+		setSize(500, 400);
+		// pack();
 		setLocationRelativeTo(null);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if ("Clear".equals(e.getActionCommand())) {
+			txtrOutput.setText(null);
+			txtrInput.setText(null);
+			}
+		if ("Encrypt".equals(e.getActionCommand())) {
+			txtrOutput.setText(Enc_decr.encrypt(txtrInput.getText()));
+			}
+		if ("Decrypt".equals(e.getActionCommand())) {
+			txtrOutput.setText(Enc_decr.decrypt(txtrInput.getText()));
+			}
 		
+
 	}
 }
