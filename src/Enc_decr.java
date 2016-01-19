@@ -8,14 +8,14 @@ public class Enc_decr {
 	private static int secondKey = 19;
 	private static int module = 26;
 
-	public static void main(String[] args) {
-	    String input = "atan";
-	    String cipher = encrypt(input);
-	    String deciphered = decrypt(cipher);
-	    System.out.println("Source:    " + input);
-	    System.out.println("Encrypted: " + cipher);
-	   System.out.println("Decrypted: " + deciphered);
-	}
+//	public static void main(String[] args) {
+//	    String input = "zorro";
+//	    String cipher = encrypt(input);
+//	    String deciphered = decrypt(cipher);
+//	    System.out.println("Source:    " + input);
+//	    System.out.println("Encrypted: " + cipher);
+//	   System.out.println("Decrypted: " + deciphered);
+//	}
 
 	static String encrypt(String input) {
 	    StringBuilder builder = new StringBuilder();
